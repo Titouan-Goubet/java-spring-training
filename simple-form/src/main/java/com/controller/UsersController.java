@@ -1,12 +1,13 @@
 package com.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import com.model.UsersModel;
 import com.service.UsersService;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class UsersController {
@@ -30,7 +31,8 @@ public class UsersController {
   }
 
   @PostMapping("/register")
-  public String register(@ModelAttribute UsersModel usersModel) {
+  @CrossOrigin(origins = "http://localhost:5173")
+  public String register(@RequestBody UsersModel usersModel) {
     System.out.println("register request : " + usersModel);
     UsersModel registeredUser = usersService.registerUser(usersModel.getLogin(), usersModel.getPassword(),
         usersModel.getEmail());
@@ -38,7 +40,8 @@ public class UsersController {
   }
 
   @PostMapping("/login")
-  public String login(@ModelAttribute UsersModel usersModel, Model model) {
+  @CrossOrigin(origins = "http://localhost:5173")
+  public String login(@RequestBody UsersModel usersModel, Model model) {
     System.out.println("login request : " + usersModel);
     UsersModel authenticated = usersService.authenticate(usersModel.getLogin(), usersModel.getPassword());
     if (authenticated != null) {
